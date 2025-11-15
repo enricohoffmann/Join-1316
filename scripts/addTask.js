@@ -63,7 +63,7 @@ function readUrlParameter() {
     const stateCategory = param.get("stateCategory");
     currentStateCategory = stateCategory ? stateCategory : "todo";
     if (stateCategory && stateCategory.length > 0) {
-        window.history.replaceState({}, document.title, '/addTask.html');
+        window.history.replaceState({}, document.title, './addTask.html');
     }
 }
 

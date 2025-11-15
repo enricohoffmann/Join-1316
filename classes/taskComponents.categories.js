@@ -123,6 +123,7 @@
         this.hideCategoryListForSelect();
         this.setCategoryInputfieldValue(this.currentCategory['title']);
         this.checkCategoryInputValue();
+        this.runValidation();
     };
 
     /**
@@ -165,6 +166,7 @@
         } else {
             this.showAndHideCategories('show');
         }
+        this.runValidation();
     };
 
 })();

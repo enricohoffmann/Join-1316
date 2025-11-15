@@ -167,7 +167,7 @@ class AddTaskUtils {
         const btn = document.getElementById(buttonID);
         if (!btn) { return; }
         setTimeout(() => {
-            btn.setAttribute('onmouseover', `${currentInstanceName}.addTaskSubmitOnMouse(event)`);
+            //btn.setAttribute('onmouseover', `${currentInstanceName}.addTaskSubmitOnMouse(event)`);
         }, 600);
         
     }

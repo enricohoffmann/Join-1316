@@ -58,8 +58,6 @@ class TaskComponents{
         await this.loadContactsAllFromDB();
         await this.loadCategoriesFromDB();
         this.setNewPriority("Medium");
-        //this.checkAvailableSpaceInAddTaskDialog();
-        //this.checkAvailableSpaceInAddTask();
     }
 
     /**
@@ -96,6 +94,7 @@ class TaskComponents{
         document.getElementById('detail-edit-ok-btn').setAttribute('data-id', this.currentTaskId);
         document.querySelector('body').setAttribute("onmouseup", `${this.currentInstance}.addTaskWindowMouseClick(event)`);
         this.readCurrentTaskDateIntoVariables();
+        this.runValidation();
     }
 
 

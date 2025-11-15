@@ -57,6 +57,8 @@
             this.currentTitle = "";
         }
 
+        this.runValidation();
+
     };
 
     /**
@@ -77,6 +79,8 @@
         }
         this.currentDueDate = result ? dueDate : "";
         this.currentDueDateInputValue = dateField.value;
+
+        this.runValidation();
     };
 
     /**
@@ -90,6 +94,7 @@
         const dateField = document.getElementById('due-date-display');
         if (!dateField) { return; }
         const dueDateCheck = new DueDateCheck(dateField.value, this.currentDueDate, this.currentDueDateInputValue, this);
+        //this.runValidation();
         return dueDateCheck.checkTheDateValue();
     };
 
@@ -138,6 +143,7 @@
         let newDateArr = String(e.target.value).split('-');
         let newDateString = `${newDateArr[2]}/${newDateArr[1]}/${newDateArr[0]}`;
         document.getElementById('due-date-display').value = newDateString;
+        this.addTaskDueDateOnFocus = true;
         this.dateFieldValidationOnInput();
     };
 
@@ -187,16 +193,17 @@
     * @param {HTMLElement} button - The button element that was clicked.
     * @return {void}
     */
-    taskComponentsPrototype.addTaskSubmitOnMouse = function (event) {
+    /* taskComponentsPrototype.addTaskSubmitOnMouse = function (event) {
 
         const button = document.getElementById('createTaskButton') || document.getElementById('detail-edit-ok-btn');
         if (!button) { return; }
-        if (event.target == button) {
+        if(button.disabled){return;}
+        if (event.currentTarget == button) {
             document.getElementById('task-title').blur();
             document.getElementById('due-date-display').blur();
-            this.addTaskCheckRequiredField(button);
+            this.addTaskCheckRequiredField();
         }
-    };
+    }; */
 
     /**
     * @description Checks if all required fields are filled and enables/disables the create button accordingly.
@@ -205,7 +212,8 @@
     * @param {HTMLElement} createButton - The create button element.
     * @return {void}
     */
-    taskComponentsPrototype.addTaskCheckRequiredField = function (createButton) {
+    taskComponentsPrototype.addTaskCheckRequiredField = function () {
+        const createButton = document.getElementById('createTaskButton') || document.getElementById('detail-edit-ok-btn');
         if (!createButton) { return; }
         let isDateFieldOK = createButton.id == "detail-edit-ok-btn" ? this.dateFieldValidateOnEdit() : this.dateFieldValidation();
         const hasCategory = this.currentCategory && typeof this.currentCategory === 'object' && 'title' in this.currentCategory;
@@ -239,5 +247,17 @@
         }
 
     };
+
+
+    /**
+     * @description Runs the validation checks for the task components.
+     * @function runValidation
+     * @memberof taskComponents.validation
+     * @returns {void}
+     */
+    taskComponentsPrototype.runValidation = function () {
+        this.addTaskCheckRequiredField();
+    };
+
 
 })();

@@ -49,11 +49,27 @@
     * @returns {Promise<void>}
      */
     taskComponentsPrototype.addTaskCreateTask = async function(event) {
-
         if (event) event.preventDefault();
-        const addTaskFormData = new FormData(event.currentTarget);
+        const button = document.getElementById('createTaskButton') || document.getElementById('detail-edit-ok-btn');
+        if (!button) { return; }
+        if(button.disabled){return;}
+        this.addTaskCheckRequiredField(button);
+        if(button.disabled){return;}
 
-        const currentTask = new Task(
+        this.safeTask(event);
+        this.addTaskAfterSafe(this.getIsDialog(), event);
+    }
+
+
+    /**
+     * @description Saves the task using the form data and local data.
+     * @function safeTask
+     * @memberof taskComponents.create
+     * @param {Event} event 
+     */
+    taskComponentsPrototype.safeTask = async function(event){
+        const addTaskFormData = new FormData(event.currentTarget);
+       const currentTask = new Task(
             getNewUid(),
             addTaskFormData.get('task-title'),
             addTaskFormData.get('task-description'),
@@ -65,8 +81,8 @@
 
         const createNewTask = new CreateNewTask(currentTask, this.currentSubTasks, this.currentContactAssignList, this.currentUser);
         await createNewTask.start();
-        this.addTaskAfterSafe(this.getIsDialog(), event);
     }
+
 
     /**
      * @description Checks if the add task form is in a dialog.

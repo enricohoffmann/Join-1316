@@ -75,7 +75,7 @@ function getURLParameter() {
 
     if (pageParam != null && pageParam.length > 0) {
         param.delete('isNotStartup');
-        window.history.replaceState({}, document.title, '/summary.html');
+        window.history.replaceState({}, document.title, './summary.html');
     }
 }
 
