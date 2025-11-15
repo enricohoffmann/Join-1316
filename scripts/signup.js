@@ -36,11 +36,12 @@ async function signupinit() {
  * @param {HTMLInputElement} input
  * @returns {void}
  */
-function signInFieldOnBlur(input) {
+async function signInFieldOnBlur(input) {
     if (!input) { return; }
 
     if (input.id) {
         eval(`validate${input.id}()`);
+        await checkAllRequiredField();
     }
 }
 
@@ -93,6 +94,7 @@ function validatefullname() {
         setInputFieldHasError(nameElement.id, "name-error-text", "First and last name are required.");
         return false;
     }
+    
 }
 
 /**
@@ -288,7 +290,10 @@ function setInputFieldHasError(elementID, errorTextID, message) {
  */
 async function signUpForm(event) {
     event.preventDefault();
-    if (!await checkAllRequiredField()) { return; }
+    const button = document.getElementById('signup-button');
+    if (!button) { return; }
+    await checkAllRequiredField();
+    if (button.disabled) { return; }
     const signUp = new FormData(event.target);
     const { firstname, lastname, initial } = splitNameToFirstLastAndInitial(signUp);
     const fb = new FirebaseDatabase();
@@ -332,12 +337,15 @@ function leaveFocusOffAllFields() {
  * @returns {boolean}
  */
 async function checkAllRequiredField() {
+     const button = document.getElementById('signup-button');
+    if (!button) { return; }
+    leaveFocusOffAllFields();
     const isNameVal = validatefullname();
     const isMailVal = await validateemail();
     const isPwdVal = validatepassword();
     const isPwdConfirmVal = validatepasswordConfirm();
     const isPolicyConfirmVal = validatePolicyAccept();
-    return isNameVal && isMailVal && isPwdVal && isPwdConfirmVal && isPolicyConfirmVal;
+    button.disabled = !(isNameVal && isMailVal && isPwdVal && isPwdConfirmVal && isPolicyConfirmVal);
 }
 
 /**
