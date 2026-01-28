@@ -17,7 +17,7 @@
         <div role="img" class="add-contact-profil-picture-mobile" title="profil-avatar"></div>
         <section class="add-contact-form-and-picture-mobile">
             <form class="add-contact-form-mobile form-for-add-contact" action="/post" method="dialog"
-                onsubmit="return newContact(event)">
+                onsubmit="return newContact(event, 'add-contact-dialog-mobile')">
 
                 <div class="add-contact-input-field-container-mobile">
 
@@ -26,30 +26,26 @@
                         oninput="clearErrorMessagesOnInput('contact-name')" type="text" id="contact-name"
                         class="add-contact-input-mobile input-name" placeholder="Name">
                     <div class="contact-error-text-container">
-                        <p id="contact-name-required" class="error-text-hidden">This field is required. Validation
-                            failed.</p>
+                        <p id="contact-name-required" class="error-text-hidden">Enter a name.</p>
                     </div>
                     <label for="contact-email" class="visually-hidden">Email</label>
                     <input onblur="contactEmailValidation(this.value)" onfocus="emailIsOnInput = true"
                         oninput="clearErrorMessagesOnInput('contact-email')" type="email" id="contact-email"
                         class="add-contact-input-mobile input-mail" placeholder="Email">
                     <div class="contact-error-text-container">
-                        <p id="contact-email-required" class="error-text-hidden">This field is required. Validation
-                            failed.</p>
+                        <p id="contact-email-required" class="error-text-hidden">Enter an email.</p>
                     </div>
                     <label for="contact-phone" class="visually-hidden">Phone</label>
                     <input onblur="contactPhoneValidation(this.value)" onfocus="phoneIsOnInput = true"
                         oninput="clearErrorMessagesOnInput('contact-phone')" type="tel" id="contact-phone"
                         class="add-contact-input-mobile input-phone" placeholder="Phone">
                     <div class="contact-error-text-container">
-                        <p id="contact-phone-required" class="error-text-hidden">This field is required. Validation
-                            failed.</p>
-
+                        <p id="contact-phone-required" class="error-text-hidden">Enter a phone number.</p>
 
                     </div>
                     <div class="login-form-buttons-mobile">
                         <button type="submit" id="btn-create-contact" class="btn-create btn btn-fill btn-md"
-                            aria-label="Create contact" disabled="true" onmouseover="contactSaveMouseUp(event)">
+                            aria-label="Create contact">
                             <p class="">Create contact</p>
                             <div aria-label="Create contact" role="img" class="btn-create-icon"></div>
                         </button>

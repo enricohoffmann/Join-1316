@@ -52,11 +52,28 @@ function setEditDialogEventListeners() {
  * @param {string} dialogId - The ID of the dialog to close
  * @returns {void}
  */
-function closeDialogByEvent(event, dialogId,) {
+function closeDialogByEvent(event, dialogId, closeDirect = false) {
     event.stopPropagation();
     const dialog = document.getElementById(dialogId);
+
+    if (closeDirect) {
+        closeDialog(dialogId);
+        return;
+    }
+
     const closeDiv = document.getElementById('btn-overlay-close-div');
     if (
+        event.target == dialog ||
+        event.target == closeDiv ||
+        event.target.closest('.btn-clear-cancel') 
+    ) {
+        closeDialog(dialogId);
+        if (dialogId == "detail-view-task-dialog") {
+            getBoardTaskWithLoadingAnimation();
+        }
+    }
+
+    /* if (
         event.target == dialog ||
         event.target == closeDiv ||
         event.target.closest('.btn-clear-cancel') ||
@@ -66,7 +83,7 @@ function closeDialogByEvent(event, dialogId,) {
         if (dialogId == "detail-view-task-dialog") {
             getBoardTaskWithLoadingAnimation();
         }
-    }
+    } */
 }
 
 /**

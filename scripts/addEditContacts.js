@@ -79,18 +79,21 @@ let currentContactEmail = "";
  * @param {Event} event - The event object from the form submission.
  * @returns {Promise<void>}
  */
-async function newContact(event) {
+async function newContact(event, dialogId) {
     if (event) event.preventDefault();
+    leaveFocusOffAllFields();
     if (!validateAllFields()) return;
     const uid = getNewUid();
     const contact = createContactObject(uid);
     const fb = new FirebaseDatabase();
     const data = await fb.getFirebaseLogin(() => fb.putData(`/contacts/${uid}`, contact));
+    closeDialogByEvent(event, dialogId, true);
     showSavedToast('new');
     await renderContacts();
     selectNewContact(uid);
     validateName = validateEmail = validatePhone = false;
-    closeDialogByEvent(event, 'add-contact-dialog');
+    
+    
 }
 
 /**
@@ -183,12 +186,14 @@ function getInitials(firstname, lastname) {
  */
 async function editContact(event) {
     if (event) event.preventDefault();
-    if (!validateAllFields()) return;
+    leaveFocusOffAllFields();
+    const valid = checkValidation();
+    if (!valid) return;
     const contactID = document.querySelector('#btn-create-contact').getAttribute('data-id');
     const contact = createUpdateContactObject();
     const fb = new FirebaseDatabase();
     await fb.getFirebaseLogin(() => fb.updateData(`/contacts/${contactID}`, contact));
-    closeDialogByEvent(event, 'add-contact-dialog');
+    closeDialogByEvent(event, 'add-contact-dialog', true);
     clearActiveContactClass();
     renderContacts();
     showSavedToast('edit');
@@ -205,9 +210,8 @@ async function editContact(event) {
  */
 async function contactSaveMouseUp(event) {
     const Btn = document.getElementById('btn-create-contact');
-    // const mobileBtn = document.querySelector('.btn-create.btn-fill.btn-md.btn-md-auto-height');
     if (event.target === Btn) {
-        leaveFocusOffAllFields();
+            
         let isValid = await checkValidation();
         if (Btn) Btn.disabled = !isValid;
         // if (mobileBtn) mobileBtn.disabled = !isValid;
@@ -237,12 +241,15 @@ function leaveFocusOffAllFields() {
  */
 async function editContactMobile(event) {
     if (event) event.preventDefault();
-    if (!validateAllFields()) return;
+    //if (!validateAllFields()) return;
+    leaveFocusOffAllFields();
+    const valid = checkValidation();
+    if (!valid) return;
     const contactID = document.querySelector('#btn-create-contact').getAttribute('data-id');
     const contact = createUpdateContactObject();
     const fb = new FirebaseDatabase();
     await fb.getFirebaseLogin(() => fb.updateData(`/contacts/${contactID}`, contact));
-    closeDialogByEvent(event, 'add-contact-dialog-mobile');
+    closeDialogByEvent(event, 'add-contact-dialog-mobile', true);
     const updatedContact = await fb.getDataByKey("id", contactID, "contacts");
     if (typeof openContactDetailMobile === "function") {
         openContactDetailMobile(updatedContact);
@@ -495,14 +502,14 @@ function contactPhoneValidation() {
  * @description - Check the validation status of all contact form fields. This function validates each field based on whether it has been modified and returns the overall validation status.
  * @returns {boolean}
  */
-async function checkValidation() {
+function checkValidation() {
     let { cVName, cVEmail, cVPhone } = getfieldCheckVariables();
     if (nameIsOnInput) {
         contactNameValidation();
         cVName = currentContactEmail === "" ? validateName : !!validateName;
     }
     if (emailIsOnInput) {
-        await contactEmailValidation();
+        contactEmailValidation();
         cVEmail = currentContactEmail === "" ? validateEmail : !!validateEmail;
     }
     if (phoneIsOnInput) {
@@ -531,7 +538,7 @@ function getfieldCheckVariables() {
  * @description - Validate all contact form fields. This function checks the validation status of each field and returns true if all fields are valid.
  * @returns {boolean} - True if all fields are valid, false otherwise.
  */
-async function validateAllFields() {
+function validateAllFields() {
     return validateName && validateEmail && validatePhone;
 }
 

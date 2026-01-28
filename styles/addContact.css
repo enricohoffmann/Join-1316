@@ -250,7 +250,7 @@
 }
 
 .left-container-contacts-mobile {
-    height: 352px;
+    /* height: 352px; */
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -274,16 +274,16 @@
 }
 
 .add-contact-profil-picture-mobile {
-    width: 120px;
-    height: 120px;
+    width: 100px;
+    height: 100px;
     object-fit: cover;
     background-image: url(../assets/profil-picture.svg);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
     position: absolute;
-    top: calc(0% - 60px);
-    left: calc(50% - 60px);
+    top: calc(0% - 50px);
+    left: calc(50% - 50px);
 }
 
 .add-contact-form-mobile {
@@ -291,7 +291,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 92px 16px 24px 24px;
+    padding: 65px 16px 24px 24px;
     gap: 8px;
 }
 
@@ -313,7 +313,7 @@
 .login-form-buttons-mobile {
     display: flex;
     justify-content: center;
-    padding-top: 17px;
+    padding-top: 8px;
     gap: 20px;
 }
 
