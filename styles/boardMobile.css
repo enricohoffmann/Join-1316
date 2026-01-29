@@ -12,6 +12,10 @@
 
 .main-container-mobile {
     width: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
 }
 
 .board-header-mobile {
@@ -42,7 +46,7 @@
 .board-main-content-mobile {
     display: flex;
     flex-direction: column;
-    max-height: calc(100vh - 160px);
+    max-height: calc(100dvh - 160px);
     overflow-x: auto;
 
 }

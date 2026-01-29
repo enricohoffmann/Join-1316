@@ -11,29 +11,42 @@
 }
 
 .content-mobile {
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    padding-bottom: calc(var(--nav-height) + env(safe-area-inset-bottom));
 }
 
 .add-task-mobile-fields {
-    height:  calc((100vh - 390px));
+    /* height: calc((100vh - 390px));
+    height: calc((100dvh - 390px));
     overflow-y: scroll;
     margin-left: auto;
     margin-right: auto;
     padding-left: 16px;
     padding-right: 16px;
+    overflow-x: hidden; */
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
     overflow-x: hidden;
+    padding: 0 16px 16px;
 }
 
 .add-task-footer-mobile {
-    position: relative;
+    /* position: relative;
     bottom: 0px;
     display: flex;
     justify-content: flex-end;
     z-index: 1000;
     width: auto;
-    margin-top: 20px;
+    margin-top: 20px; */
+    position: sticky;
+    bottom: var(--nav-height);
+    background: var(--default-bg-color);
+    padding: 12px 0;
+    z-index: 20;
 }
 
 .add-task-footer-board-single {
@@ -63,4 +76,3 @@
     font-family: 'Inter';
     font-size: 16px;
 }
-
