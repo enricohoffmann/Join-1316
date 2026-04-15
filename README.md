@@ -67,7 +67,7 @@ No build tools or package managers are required — the project runs directly in
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/your-username/join-1316.git
+   git clone https://github.com/enricohoffmann/join-1316.git
    cd join-1316
    ```
 
